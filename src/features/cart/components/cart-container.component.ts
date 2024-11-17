@@ -24,11 +24,6 @@ export function CartContainer({ children, ...config }: CartContainerProps) {
   const prevIsValidatingRef = useRef(isValidating);
 
   useEffect(() => {
-    console.group("useEffect");
-    console.log("[isValidating]", isValidating);
-    console.log("[previous isValidating]", prevIsValidatingRef.current);
-    console.groupEnd();
-
     // `isValidating` was true, but now it's false
     if (prevIsValidatingRef.current && !isValidating) {
       setFetchCount((c) => c + 1);
@@ -51,7 +46,7 @@ export function CartContainer({ children, ...config }: CartContainerProps) {
     isLoading,
     isValidating,
     isFetchingAfterMount: fetchCount === 0 && isValidating,
-    isFetchedAfterMount: fetchCount >= 1 && !!data,
+    isFetchedAfterMount: fetchCount === 1 && !!data,
     revalidate,
   });
 }

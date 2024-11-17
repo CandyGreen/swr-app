@@ -42,6 +42,7 @@ const STATIC_CART: Cart = {
           description: "Product A description",
         },
       },
+      isValidated: false,
     },
     {
       id: "83a21359-4835-49d4-ad82-f4082294443c",
@@ -75,6 +76,7 @@ const STATIC_CART: Cart = {
           description: "Product B description",
         },
       },
+      isValidated: true,
     },
   ],
   price: {
@@ -91,8 +93,19 @@ export default async function handler(
 ) {
   await sleep(2000);
 
-  res.status(HttpStatusCode.OK).json({
-    data: STATIC_CART,
-    metadata: {},
-  });
+  const isError = false; // Math.random() < 0.5
+
+  if (isError) {
+    res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+      error: {
+        message: "Something went wrong",
+      },
+      metadata: {},
+    });
+  } else {
+    res.status(HttpStatusCode.OK).json({
+      data: STATIC_CART,
+      metadata: {},
+    });
+  }
 }

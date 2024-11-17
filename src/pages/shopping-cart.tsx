@@ -1,7 +1,11 @@
 import { CartContainer } from "@/features/cart/components/cart-container.component";
 import { Layout } from "@/features/common/components/layout.component";
+import { useAppLocale } from "@/features/common/hooks/use-app-locale.hook";
+import { formatPrice } from "@/features/common/utils/format-price.util";
 
 export default function ShoppingCartPage() {
+  const locale = useAppLocale();
+
   return (
     <div>
       <h1 className="mb-2 text-2xl font-bold">Shopping Cart</h1>
@@ -21,6 +25,7 @@ export default function ShoppingCartPage() {
                   <li key={lineItem.id}>
                     <p>Name: {lineItem.product.content.name}</p>
                     <p>Description: {lineItem.product.content.description}</p>
+                    <p>Price: {formatPrice(lineItem.price.total.selling, locale)}</p>
                   </li>
                 ))}
               </ul>

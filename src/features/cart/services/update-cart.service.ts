@@ -4,10 +4,11 @@ import { AppLocale } from "@/features/common/constants/common.constants";
 import { BffSuccessResponse } from "@/features/common/types/common.types";
 
 import { axios } from "../clients/axios.client";
-import { Cart } from "../types/cart.types";
+import { Cart, LineItem } from "../types/cart.types";
 
-type UpdateCartPayload = {
+export type UpdateCartPayload = {
   cartId: string;
+  lineItems: Pick<LineItem, "id" | "quantity">[];
   locale: AppLocale;
   token: string | null;
 };
@@ -18,13 +19,13 @@ function getApiUrl(cartId: string) {
   return `/${cartId}`;
 }
 
-export async function updateCart({ cartId, locale, token }: UpdateCartPayload) {
+export async function updateCart({ cartId, lineItems, locale, token }: UpdateCartPayload) {
   try {
     const { data } = await axios.put<UpdateCartResponse>(
       getApiUrl(cartId),
       {
         lineItems: {
-          updates: [],
+          updates: lineItems,
         },
       },
       {

@@ -1,4 +1,4 @@
-import { Currency } from "@/features/common/constants/common.constants";
+import { Money, Price } from "@/features/common/types/common.types";
 
 type Product = {
   id: number;
@@ -8,17 +8,7 @@ type Product = {
   };
 };
 
-type Money = {
-  value: number;
-  currency: Currency;
-};
-
-type Price = {
-  base: Money;
-  selling: Money;
-};
-
-type LineItem = {
+export type LineItem = {
   id: string;
   quantity: number;
   product: Product;
@@ -26,6 +16,7 @@ type LineItem = {
     unit: Price;
     total: Price;
   };
+  isValidated: boolean;
 };
 
 type Customer = {

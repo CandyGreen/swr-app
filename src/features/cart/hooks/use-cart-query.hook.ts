@@ -6,7 +6,7 @@ import { GetCartPayload, GetCartResponse, getCart } from "../services/get-cart.s
 
 export type UseCartQueryData = GetCartResponse;
 
-export type UseCartQueryConfig = SWRConfiguration<UseCartQueryData> & {
+export type UseCartQueryConfig = SWRConfiguration<UseCartQueryData, Error> & {
   enabled?: boolean;
 };
 

@@ -17,21 +17,21 @@ const STATIC_CART: Cart = {
         unit: {
           base: {
             currency: Currency.USD,
-            value: 10,
+            value: 25,
           },
           selling: {
             currency: Currency.USD,
-            value: 10,
+            value: 25,
           },
         },
         total: {
           base: {
             currency: Currency.USD,
-            value: 20,
+            value: 50,
           },
           selling: {
             currency: Currency.USD,
-            value: 20,
+            value: 50,
           },
         },
       },
@@ -42,6 +42,7 @@ const STATIC_CART: Cart = {
           description: "Product A description",
         },
       },
+      isValidated: true,
     },
     {
       id: "83a21359-4835-49d4-ad82-f4082294443c",
@@ -75,11 +76,12 @@ const STATIC_CART: Cart = {
           description: "Product B description",
         },
       },
+      isValidated: true,
     },
   ],
   price: {
     currency: Currency.USD,
-    value: 25,
+    value: 55,
   },
   createdAt: new Date().toISOString(),
   updatedAt: new Date().toISOString(),
