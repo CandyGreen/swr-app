@@ -1,10 +1,10 @@
 import { isAxiosError } from "axios";
 
 import { AppLocale } from "@/features/common/constants/common.constants";
-import { BffSuccessResponse } from "@/features/common/types/common.types";
+import { BffSuccessResponse } from "@/features/common/types/api.types";
 
 import { axios } from "../clients/axios.client";
-import { Cart } from "../types/cart.types";
+import { Cart } from "../types/cart.type";
 
 export type GetCartPayload = {
   token: string | null;

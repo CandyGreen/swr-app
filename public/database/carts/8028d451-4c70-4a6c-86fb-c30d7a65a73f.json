@@ -1,0 +1,82 @@
+{
+  "id": "8028d451-4c70-4a6c-86fb-c30d7a65a73f",
+  "lineItems": [
+    {
+      "id": "715d0ea1-2bbf-4f06-9eaa-c17a9a31de22",
+      "quantity": 2,
+      "price": {
+        "unit": {
+          "base": {
+            "currency": "usd",
+            "value": 10
+          },
+          "selling": {
+            "currency": "usd",
+            "value": 10
+          }
+        },
+        "total": {
+          "base": {
+            "currency": "usd",
+            "value": 20
+          },
+          "selling": {
+            "currency": "usd",
+            "value": 20
+          }
+        }
+      },
+      "product": {
+        "id": 1,
+        "content": {
+          "name": "Product A name",
+          "description": "Product A description"
+        }
+      },
+      "isValidated": true
+    },
+    {
+      "id": "83a21359-4835-49d4-ad82-f4082294443c",
+      "quantity": 1,
+      "price": {
+        "unit": {
+          "base": {
+            "currency": "usd",
+            "value": 5
+          },
+          "selling": {
+            "currency": "usd",
+            "value": 5
+          }
+        },
+        "total": {
+          "base": {
+            "currency": "usd",
+            "value": 5
+          },
+          "selling": {
+            "currency": "usd",
+            "value": 5
+          }
+        }
+      },
+      "product": {
+        "id": 1,
+        "content": {
+          "name": "Product B name",
+          "description": "Product B description"
+        }
+      },
+      "isValidated": true
+    }
+  ],
+  "price": {
+    "currency": "usd",
+    "value": 25
+  },
+  "customer": {
+    "id": "7b3e0d14-f1b0-4bc8-b7d1-6235cbce9a2a"
+  },
+  "createdAt": "2024-11-23T14:29:04.992Z",
+  "updatedAt": "2024-11-23T18:48:57.214Z"
+}

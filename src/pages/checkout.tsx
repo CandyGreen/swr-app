@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { CartContainer } from "@/features/cart/components/cart-container.component";
 import { RefreshCartPricesContainer } from "@/features/cart/components/refresh-cart-prices-container.component";
 import { Layout } from "@/features/common/components/layout.component";
@@ -9,6 +11,10 @@ export default function CheckoutPage() {
 
   return (
     <div>
+      <Head>
+        <title>App | Checkout</title>
+      </Head>
+
       <h1 className="mb-2 text-2xl font-bold">Checkout</h1>
 
       <CartContainer revalidateOnMount>

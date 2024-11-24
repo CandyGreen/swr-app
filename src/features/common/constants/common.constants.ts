@@ -10,6 +10,11 @@ export enum HttpMethod {
 
 export enum HttpStatusCode {
   OK = 200,
+  NO_CONTENT = 204,
+  NOT_FOUND = 404,
+  FORBIDDEN = 403,
+  METHOD_NOT_ALLOWED = 405,
+  UNPROCESSABLE_ENTITY = 422,
   INTERNAL_SERVER_ERROR = 500,
 }
 
@@ -20,4 +25,8 @@ export enum Currency {
 export enum AppLocale {
   EN = "en",
   FR = "fr",
+}
+
+export enum CacheControl {
+  NO_CACHE = "no-cache",
 }

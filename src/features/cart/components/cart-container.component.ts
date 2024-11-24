@@ -34,12 +34,6 @@ export function CartContainer({ children, ...config }: CartContainerProps) {
     };
   }, [isValidating]);
 
-  useEffect(() => {
-    console.group("useEffect");
-    console.log("[fetchCount]", fetchCount);
-    console.groupEnd();
-  }, [fetchCount]);
-
   return children({
     cart: data,
     isError: !!error,

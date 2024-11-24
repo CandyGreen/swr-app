@@ -1,100 +1,61 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
-import { Cart } from "@/features/cart/types/cart.types";
-import { Currency, HttpStatusCode } from "@/features/common/constants/common.constants";
-import { BffFailureResponse, BffSuccessResponse } from "@/features/common/types/common.types";
-import { sleep } from "@/features/common/utils/sleep.util";
+import { updateCartController } from "@/features/cart/controllers/update-cart";
+import { Cart } from "@/features/cart/types/cart.type";
+import { createCartCookie } from "@/features/cart/utils/create-cart-cookie.util";
+import { deleteCartCookie } from "@/features/cart/utils/delete-cart-cookie.util";
+import { HttpMethod, HttpStatusCode } from "@/features/common/constants/common.constants";
+import { withDelay } from "@/features/common/middlewares/with-delay.middleware";
+import { withErrorBoundary } from "@/features/common/middlewares/with-error-boundary.middleware";
+import { withRequestMethods } from "@/features/common/middlewares/with-request-methods.middleware";
+import { BffFailureResponse, BffSuccessResponse } from "@/features/common/types/api.types";
+import { Context } from "@/features/common/types/context.type";
+import { applyMiddlewares } from "@/features/common/utils/apply-middlewares.util";
+import { isHttpError } from "@/features/common/utils/is-http-error.util";
 
-type GetCartHandlerResponse = BffSuccessResponse<Cart> | BffFailureResponse;
+type UpdateCartHandlerResponse = BffSuccessResponse<Cart> | BffFailureResponse;
 
-const STATIC_CART: Cart = {
-  id: "8028d451-4c70-4a6c-86fb-c30d7a65a73f",
-  lineItems: [
-    {
-      id: "715d0ea1-2bbf-4f06-9eaa-c17a9a31de22",
-      quantity: 2,
-      price: {
-        unit: {
-          base: {
-            currency: Currency.USD,
-            value: 25,
-          },
-          selling: {
-            currency: Currency.USD,
-            value: 25,
-          },
-        },
-        total: {
-          base: {
-            currency: Currency.USD,
-            value: 50,
-          },
-          selling: {
-            currency: Currency.USD,
-            value: 50,
-          },
-        },
-      },
-      product: {
-        id: 1,
-        content: {
-          name: "Product A name",
-          description: "Product A description",
-        },
-      },
-      isValidated: true,
-    },
-    {
-      id: "83a21359-4835-49d4-ad82-f4082294443c",
-      quantity: 1,
-      price: {
-        unit: {
-          base: {
-            currency: Currency.USD,
-            value: 5,
-          },
-          selling: {
-            currency: Currency.USD,
-            value: 5,
-          },
-        },
-        total: {
-          base: {
-            currency: Currency.USD,
-            value: 5,
-          },
-          selling: {
-            currency: Currency.USD,
-            value: 5,
-          },
-        },
-      },
-      product: {
-        id: 2,
-        content: {
-          name: "Product B name",
-          description: "Product B description",
-        },
-      },
-      isValidated: true,
-    },
-  ],
-  price: {
-    currency: Currency.USD,
-    value: 55,
-  },
-  createdAt: new Date().toISOString(),
-  updatedAt: new Date().toISOString(),
-};
+const CUSTOMER_ID = "7b3e0d14-f1b0-4bc8-b7d1-6235cbce9a2a";
 
-export default async function handler(
-  _req: NextApiRequest,
-  res: NextApiResponse<GetCartHandlerResponse>,
+async function updateCartHandler(
+  req: NextApiRequest,
+  res: NextApiResponse<UpdateCartHandlerResponse>,
 ) {
-  await sleep(2000);
+  const context: Context = {
+    auth: {
+      identity: {
+        id: CUSTOMER_ID,
+      },
+    },
+    logger: {
+      debug: console.log,
+      info: console.info,
+      warn: console.warn,
+      error: console.error,
+    },
+  };
 
-  res.status(HttpStatusCode.OK).json({
-    data: STATIC_CART,
-    metadata: {},
-  });
+  try {
+    const cart = await updateCartController(context, {
+      params: req.query,
+      body: req.body,
+    });
+
+    res.setHeader("Set-Cookie", createCartCookie(cart.id));
+    res.status(HttpStatusCode.OK).json({ data: cart, metadata: {} });
+  } catch (error) {
+    if (isHttpError(error) && error.status === HttpStatusCode.NOT_FOUND) {
+      res.setHeader("Set-Cookie", deleteCartCookie());
+      res.status(HttpStatusCode.NO_CONTENT).end();
+      return;
+    }
+
+    throw error;
+  }
 }
+
+export default applyMiddlewares(updateCartHandler, [
+  withErrorBoundary,
+  withRequestMethods([HttpMethod.PUT]),
+  withDelay(500),
+]);

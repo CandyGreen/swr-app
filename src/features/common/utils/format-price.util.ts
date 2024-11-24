@@ -1,5 +1,5 @@
 import { AppLocale } from "../constants/common.constants";
-import { Money } from "../types/common.types";
+import { Money } from "../types/money.type";
 
 const LOCALES_MAP = {
   [AppLocale.EN]: "en-US",

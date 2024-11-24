@@ -1,3 +1,5 @@
+import Head from "next/head";
+
 import { CartContainer } from "@/features/cart/components/cart-container.component";
 import { Layout } from "@/features/common/components/layout.component";
 import { useAppLocale } from "@/features/common/hooks/use-app-locale.hook";
@@ -8,6 +10,10 @@ export default function ShoppingCartPage() {
 
   return (
     <div>
+      <Head>
+        <title>App | Shopping Cart</title>
+      </Head>
+
       <h1 className="mb-2 text-2xl font-bold">Shopping Cart</h1>
 
       <CartContainer revalidateOnMount>
